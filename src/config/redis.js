@@ -15,6 +15,7 @@ let client;
     });
   } catch (err) {
     if (err.code === "ECONNREFUSED") {
+      debug(err);
     } else {
       console.log(err);
     }

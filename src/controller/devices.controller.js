@@ -8,6 +8,133 @@ const {
   modbusChannels,
 } = require("../model/index");
 const { Op } = require("sequelize");
+const { newJob, deleteJob } = require("../config/bull");
+async function getAllSchedule() {
+  try {
+    const result = (
+      await devices.findAll({
+        where: {
+          [Op.or]: [
+            {
+              isProvision: {
+                [Op.not]: false,
+              },
+            },
+            {
+              isPersistence: { [Op.not]: false },
+            },
+          ],
+        },
+        attributes: { exclude: ["modelId"] },
+        include: [
+          {
+            model: models,
+            include: [
+              {
+                model: modbusChannels,
+                attributes: { exclude: ["modelId"] },
+              },
+            ],
+          },
+          {
+            model: modbusRTUs,
+            attributes: { exclude: ["deviceId", "id"] },
+          },
+          {
+            model: modbusTCPs,
+            attributes: { exclude: ["deviceId", "id"] },
+          },
+          {
+            model: mqtts,
+            attributes: ["id"],
+          },
+        ],
+      })
+    ).map((e) => e.toJSON());
+    if (result) {
+      result.forEach((e) => {
+        e.channels = e.model[e.model.type];
+        delete e.model;
+        if (e.modbusRTU === null) {
+          delete e.modbusRTU;
+        }
+        if (e.modbusTCP === null) {
+          delete e.modbusTCP;
+        }
+      });
+      result.forEach((e) => newJob(e));
+    } else {
+      throw new Error();
+    }
+  } catch (err) {
+    debug(err);
+    return err;
+  }
+}
+getAllSchedule();
+async function getSchedule({ name = null, id = null }) {
+  try {
+    const result = (
+      await devices.findOne({
+        where: {
+          [Op.and]: {
+            [Op.or]: [
+              {
+                isProvision: {
+                  [Op.not]: false,
+                },
+              },
+              {
+                isPersistence: { [Op.not]: false },
+              },
+            ],
+            [Op.or]: { name: name, id: id },
+          },
+        },
+        attributes: { exclude: ["modelId"] },
+        include: [
+          {
+            model: models,
+            include: [
+              {
+                model: modbusChannels,
+                attributes: { exclude: ["modelId"] },
+              },
+            ],
+          },
+          {
+            model: modbusRTUs,
+            attributes: { exclude: ["deviceId", "id"] },
+          },
+          {
+            model: modbusTCPs,
+            attributes: { exclude: ["deviceId", "id"] },
+          },
+          {
+            model: mqtts,
+            attributes: ["id"],
+          },
+        ],
+      })
+    ).toJSON();
+    if (result) {
+      result.channels = result.model[result.model.type];
+      delete result.model;
+      if (result.modbusRTU === null) {
+        delete result.modbusRTU;
+      }
+      if (result.modbusTCP === null) {
+        delete result.modbusTCP;
+      }
+      newJob(result);
+    } else {
+      throw new Error();
+    }
+  } catch (err) {
+    debug(err);
+    throw new Error(err);
+  }
+}
 module.exports = {
   new: async function (req, res) {
     const {
@@ -49,7 +176,6 @@ module.exports = {
           },
         });
       }
-      console.log(deviceInstance);
       await devices.create(deviceInstance, {
         include: [
           { association: devices.modbusRTUs },
@@ -57,6 +183,7 @@ module.exports = {
           { association: devices.mqtts },
         ],
       });
+      getSchedule({ name: name });
       res.sendStatus(201);
     } catch (err) {
       console.log(err);
@@ -84,7 +211,11 @@ module.exports = {
   delete: async function (req, res) {
     const { name = null, id = null } = req.query;
     try {
-      await devices.destroy({ where: { [Op.or]: { name: name, id: id } } });
+      const device = await devices.findOne({
+        where: { [Op.or]: { name: name, id: id } },
+      });
+      deleteJob({ id: device.id });
+      device.destroy();
       return res.sendStatus(200);
     } catch (err) {
       debug(err.message);
