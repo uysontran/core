@@ -140,39 +140,36 @@ module.exports = {
     const {
       name,
       interval,
-      southProtocol,
-      northProtocol,
+      downProtocol,
+      upProtocol,
       startTime,
       modelId,
       isProvision,
       isPersistence,
     } = req.body;
-    if (northProtocol) {
-      if (
-        northProtocol.type === "mqtt" &&
-        northProtocol.wsOption !== undefined
-      ) {
-        northProtocol.wsOption = JSON.stringify(northProtocol.wsOption);
+    if (upProtocol) {
+      if (upProtocol.type === "mqtt" && upProtocol.wsOption !== undefined) {
+        upProtocol.wsOption = JSON.stringify(upProtocol.wsOption);
       }
     }
     try {
       const deviceInstance = {
         name,
         interval,
-        southProtocol: southProtocol.type,
+        downProtocol: downProtocol.type,
         startTime,
         modelId: modelId,
         isProvision,
         isPersistence,
-        [southProtocol.type]: {
-          ...southProtocol,
+        [downProtocol.type]: {
+          ...downProtocol,
         },
       };
-      if (northProtocol) {
+      if (upProtocol) {
         Object.assign(deviceInstance, {
-          northProtocol: northProtocol.type,
-          [northProtocol.type]: {
-            ...northProtocol,
+          upProtocol: upProtocol.type,
+          [upProtocol.type]: {
+            ...upProtocol,
           },
         });
       }

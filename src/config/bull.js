@@ -28,7 +28,7 @@ const emptyQueue = async (q) => {
 dsModbus.process("ds-modbus", async function (job, done) {
   const axios = require("axios");
   const data = JSON.parse(job.data);
-  const { name, channels, southProtocol, isProvision, northProtocol } = data;
+  const { name, channels, downProtocol, isProvision, upProtocol } = data;
 
   try {
     // const gatewayId = await new Promise((resolve, reject) => {
@@ -38,17 +38,17 @@ dsModbus.process("ds-modbus", async function (job, done) {
     //   });
     // });
     const gatewayId = "1234";
-    switch (southProtocol) {
+    switch (downProtocol) {
       case "modbusRTU":
       case "modbusTCP":
         const result = await Promise.all(
           channels.map((e) =>
             axios.post(
               `${process.env.DSMODBUS || "http://127.0.0.1:33336"}/action/${
-                southProtocol.split("modbus")[1]
+                downProtocol.split("modbus")[1]
               }`,
               {
-                ...data[southProtocol],
+                ...data[downProtocol],
                 ...e,
               }
             )
@@ -66,7 +66,7 @@ dsModbus.process("ds-modbus", async function (job, done) {
           },
         };
         if (isProvision === true) {
-          switch (northProtocol) {
+          switch (upProtocol) {
             case null:
             case "mqtt":
               axios
