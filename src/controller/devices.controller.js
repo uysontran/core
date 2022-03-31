@@ -215,7 +215,7 @@ module.exports = {
       const device = await devices.findOne({
         where: { [Op.or]: { name: name, id: id } },
       });
-      deleteJob({ id: device.id });
+      await deleteJob({ id: device.id });
       if (device.upProtocol) {
         axios.post("http://127.0.0.1:33335/newClient");
       }
