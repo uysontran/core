@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
-    "setup": "sudo apt-get install libsqlite3-dev && cross-env npm_config_build_from_source=true npm install"
+    "setup": "npm install sqlite3 --build-from-source --sqlite=/usr && npm install"
   },
   "repository": {
     "type": "git",
@@ -35,8 +35,5 @@
     "redis": "^2.8.0",
     "sequelize": "^6.17.0",
     "sqlite3": "^5.0.2"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.3"
   }
 }
