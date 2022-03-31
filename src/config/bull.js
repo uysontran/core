@@ -31,20 +31,19 @@ dsModbus.process("ds-modbus", async function (job, done) {
   const { name, channels, downProtocol, isProvision, upProtocol } = data;
 
   try {
-    // const gatewayId = await new Promise((resolve, reject) => {
-    //   client.get("gatewayId", (err, reply) => {
-    //     resolve(reply);
-    //     reject(err);
-    //   });
-    // });
-    const gatewayId = "1234";
+    const gatewayId = await new Promise((resolve, reject) => {
+      client.get("gatewayId", (err, reply) => {
+        resolve(reply);
+        reject(err);
+      });
+    });
     switch (downProtocol) {
       case "modbusRTU":
       case "modbusTCP":
         const result = await Promise.all(
           channels.map((e) =>
             axios.post(
-              `${process.env.DSMODBUS || "http://127.0.0.1:33336"}/action/${
+              `${process.env.DSMODBUS || "http://127.0.0.1:33334"}/action/${
                 downProtocol.split("modbus")[1]
               }`,
               {
@@ -71,7 +70,7 @@ dsModbus.process("ds-modbus", async function (job, done) {
             case "mqtt":
               axios
                 .post(
-                  (process.env.MQTT || "http://127.0.0.1:33337") + "/telemetry",
+                  (process.env.MQTT || "http://127.0.0.1:33335") + "/telemetry",
                   {
                     id: data.mqtt?.deviceId || null,
                     package,
@@ -83,7 +82,6 @@ dsModbus.process("ds-modbus", async function (job, done) {
             default:
           }
         }
-        res.sendStatus(200);
         break;
       default:
         throw new Error("protocol not supported");

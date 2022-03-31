@@ -31,7 +31,7 @@ models.modbusChannels = models.hasMany(modbusChannels, {
   foreignKey: "modelId",
   onDelete: "CASCADE",
 });
-async function sync() {
+(async function () {
   try {
     await sequelize.sync();
     debug("All models were synchronized successfully.");
@@ -45,8 +45,8 @@ async function sync() {
       debug(err.message);
     }
   }
-}
-sync();
+})();
+
 module.exports = {
   modbusRTUs,
   modbusTCPs,

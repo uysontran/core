@@ -1,6 +1,6 @@
-const debug = require("../utils/debug")("redis");
 let client;
 (async () => {
+  const debug = require("../utils/debug")("redis");
   try {
     const { createClient } = require("redis");
     client = createClient();

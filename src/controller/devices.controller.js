@@ -243,16 +243,27 @@ module.exports = {
   },
   getDevicesInfo: async function (req, res) {
     try {
-      const result = await devices.findAll({
-        include: [
-          { model: models },
-          { model: modbusRTUs },
-          { model: modbusTCPs },
-          { model: mqtts },
-        ],
-      });
+      const result = (
+        await devices.findAll({
+          include: [
+            { model: models },
+            { model: modbusRTUs },
+            { model: modbusTCPs },
+            { model: mqtts },
+          ],
+        })
+      ).map((e) => e.toJSON());
+      const defaultMqtt = (
+        await mqtts.findOne({ where: { deviceId: null } })
+      ).toJSON();
       if (result) {
-        return res.send(result.map((e) => e.toJSON()));
+        result
+          .filter((e) => e.upProtocol === null)
+          .forEach(async (e) => {
+            e.upProtocol = "mqtt";
+            e.mqtt = defaultMqtt;
+          });
+        return res.send(result);
       } else {
         throw new Error();
       }

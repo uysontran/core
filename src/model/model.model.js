@@ -21,6 +21,10 @@ const models = sequelize.define(
       type: DataTypes.STRING,
       modelId: DataTypes.INTEGER,
     },
+    scale: {
+      type: DataTypes.DOUBLE,
+      defaultValue: 1,
+    },
   },
   {
     timestamps: false,
@@ -83,9 +87,14 @@ const modbusChannels = sequelize.define(
         "UIntLE",
       ],
       allowNull: false,
+      defaultValue: "Int16BE",
     },
     parser: {
       type: DataTypes.STRING,
+    },
+    scale: {
+      type: DataTypes.DOUBLE,
+      defaultValue: 1,
     },
   },
   {
