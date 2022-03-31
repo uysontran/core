@@ -9,6 +9,7 @@ const {
 } = require("../model/index");
 const { Op } = require("sequelize");
 const { newJob, deleteJob } = require("../config/bull");
+const { default: axios } = require("axios");
 async function getAllSchedule() {
   try {
     const result = (
@@ -181,6 +182,9 @@ module.exports = {
         ],
       });
       getSchedule({ name: name });
+      if (upProtocol) {
+        axios.post("http://127.0.0.1:33335/newClient");
+      }
       res.sendStatus(201);
     } catch (err) {
       console.log(err);
@@ -212,6 +216,9 @@ module.exports = {
         where: { [Op.or]: { name: name, id: id } },
       });
       deleteJob({ id: device.id });
+      if (device.upProtocol) {
+        axios.post("http://127.0.0.1:33335/newClient");
+      }
       device.destroy();
       return res.sendStatus(200);
     } catch (err) {

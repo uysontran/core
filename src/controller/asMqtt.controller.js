@@ -37,7 +37,13 @@ module.exports = {
   },
   defaultConfig: async function (req, res) {
     try {
-      mqtts.create(req.body);
+      mqtts.findOrCreate({
+        where: { deviceId: null },
+        defaults: {
+          ...req.body,
+        },
+      });
+      axios.post("http://127.0.0.1:33335/newClient");
       res.sendStatus(200);
     } catch (err) {
       console.log(err);

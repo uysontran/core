@@ -21,10 +21,6 @@ const models = sequelize.define(
       type: DataTypes.STRING,
       modelId: DataTypes.INTEGER,
     },
-    scale: {
-      type: DataTypes.DOUBLE,
-      defaultValue: 1,
-    },
   },
   {
     timestamps: false,
