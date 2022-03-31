@@ -125,7 +125,9 @@ module.exports = {
     }
   },
   deleteJob: async function ({ id = null }) {
-    const job = (await dsModbus.getRepeatableJobs()).find((e) => e.id === id);
+    const job = (await dsModbus.getRepeatableJobs()).find(
+      (e) => parseInt(e.id) === id
+    );
     await dsModbus.removeRepeatableByKey(job.key);
   },
 };
