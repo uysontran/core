@@ -56,6 +56,9 @@ const modbusChannels = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    precision: {
+      type: DataTypes.INTEGER,
+    },
     parse: {
       type: DataTypes.ENUM,
       values: [
