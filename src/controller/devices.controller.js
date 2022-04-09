@@ -6,73 +6,10 @@ const {
   modbusTCPs,
   mqtts,
   modbusChannels,
-} = require("../model/index");
+} = require("../model");
 const { Op } = require("sequelize");
 const { newJob, deleteJob } = require("../config/bull");
 const { default: axios } = require("axios");
-async function getAllSchedule() {
-  try {
-    const result = (
-      await devices.findAll({
-        where: {
-          [Op.or]: [
-            {
-              isProvision: {
-                [Op.not]: false,
-              },
-            },
-            {
-              isPersistence: { [Op.not]: false },
-            },
-          ],
-        },
-        attributes: { exclude: ["modelId"] },
-        include: [
-          {
-            model: models,
-            include: [
-              {
-                model: modbusChannels,
-                attributes: { exclude: ["modelId"] },
-              },
-            ],
-          },
-          {
-            model: modbusRTUs,
-            attributes: { exclude: ["deviceId", "id"] },
-          },
-          {
-            model: modbusTCPs,
-            attributes: { exclude: ["deviceId", "id"] },
-          },
-          {
-            model: mqtts,
-            attributes: ["id"],
-          },
-        ],
-      })
-    ).map((e) => e.toJSON());
-    if (result) {
-      result.forEach((e) => {
-        e.channels = e.model[e.model.type];
-        delete e.model;
-        if (e.modbusRTU === null) {
-          delete e.modbusRTU;
-        }
-        if (e.modbusTCP === null) {
-          delete e.modbusTCP;
-        }
-      });
-      result.forEach((e) => newJob(e));
-    } else {
-      throw new Error();
-    }
-  } catch (err) {
-    debug(err);
-    return err;
-  }
-}
-getAllSchedule();
 async function getSchedule({ name = null, id = null }) {
   try {
     const result = (
