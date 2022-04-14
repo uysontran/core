@@ -1,12 +1,13 @@
 const { models, modbusChannels } = require("../model/index");
 const debug = require("../utils/debug")("app/modelController");
 const { Op } = require("sequelize");
+const sequelize = require("../config/sequelize");
 const controller = {
   create: async function (req, res) {
     const { name, channels, manufacture, type } = req.body;
 
     try {
-      if (channels) {
+      await sequelize.transaction(async (t) => {
         await models.create(
           {
             name,
@@ -20,35 +21,21 @@ const controller = {
                 association: models.modbusChannels,
               },
             ],
+            transaction: t,
           }
         );
+
         res.sendStatus(201);
-      }
+      });
     } catch (err) {
-      console.log(err);
-      try {
-        if (err?.parent?.table === "models") {
-          if (err.name === "SequelizeUniqueConstraintError") {
-            throw new Error("model existed");
-          } else {
-            throw new Error("");
-          }
-        } else if (err?.parent?.table === "channels") {
-          (await models.findOne({ where: { name: name } })).destroy();
-          if (err.name === "SequelizeUniqueConstraintError") {
-            if (err.parent.constraint === "channels_pkey") {
-              throw new Error("channel names conflict");
-            } else if (err.parent.constraint === "channels_model_name_addr") {
-              throw new Error("channel address conflict");
-            } else throw new Error("");
-          } else {
-            throw new Error("");
-          }
-        } else {
-          throw new Error("");
+      if (err.name === "SequelizeUniqueConstraintError") {
+        if (err.errors[0].message === "name must be unique")
+          res.status(400).send(err.errors[0].message);
+        else {
+          res.status(400).send("Channel Name or Address must be unique");
         }
-      } catch (err) {
-        res.status(400).send(err.message);
+      } else {
+        res.sendStatus(400);
       }
     }
   },
