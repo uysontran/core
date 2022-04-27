@@ -96,7 +96,6 @@ const modbusChannels = sequelize.define(
   },
   {
     timestamps: false,
-    indexes: [{ fields: ["modelId", "addr"], unique: true }],
   }
 );
 module.exports = {

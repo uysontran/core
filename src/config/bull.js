@@ -1,8 +1,9 @@
 const Queue = require("bull");
 const dsModbus = new Queue("ds-modbus");
-const debug = require("../utils/debug")("task");
+
 const { client } = require("./redis");
 const emptyQueue = async (q) => {
+  const debug = require("../utils/debug")("task");
   const getKeys = async (q) => {
     const multi = q.multi();
     multi.keys("*");
@@ -23,13 +24,15 @@ const emptyQueue = async (q) => {
   const keys = await getKeys(q);
   const queueKeys = filterQueueKeys(q, keys);
   await deleteKeys(q, queueKeys);
+  debug("bull is ready");
 };
 
 dsModbus.process("ds-modbus", async function (job, done) {
-  const axios = require("axios");
   const data = JSON.parse(job.data);
   const { name, channels, downProtocol, isProvision, upProtocol } = data;
-
+  const debug = require("../utils/debug")(`task:devices ${name}:`);
+  const axios = require("axios");
+  // debug("reading devices");
   try {
     const gatewayId = await new Promise((resolve, reject) => {
       client.get("gatewayId", (err, reply) => {
@@ -40,44 +43,57 @@ dsModbus.process("ds-modbus", async function (job, done) {
     switch (downProtocol) {
       case "modbusRTU":
       case "modbusTCP":
-        const result = await Promise.all(
-          channels.map((e) =>
-            axios.post(
+        let status = "active";
+        const results = [];
+        for (const channel of channels) {
+          try {
+            const result = await axios.post(
               `${process.env.DSMODBUS || "http://127.0.0.1:33334"}/action/${
                 downProtocol.split("modbus")[1]
               }`,
               {
                 ...data[downProtocol],
-                ...e,
+                ...channel,
               }
-            )
-          )
-        );
-        const resultAsObject = result.reduce(
+            );
+            results.push(result);
+          } catch (err) {
+            console.log(err.response.data);
+            status = "inactive";
+            break;
+          }
+        }
+        const resultAsObject = results.reduce(
           (pre, curr) => Object.assign(pre, curr.data),
           {}
         );
         const package = {
           gatewayId,
           timestamp: new Date().toISOString(),
-          devices: {
-            [name]: resultAsObject,
-          },
+          status,
         };
+        if (status === "active") {
+          package.devices = {
+            [name]: resultAsObject,
+          };
+        }
         if (isProvision === true) {
           switch (upProtocol) {
             case null:
             case "mqtt":
-              axios
-                .post(
-                  (process.env.MQTT || "http://127.0.0.1:33335") + "/telemetry",
-                  {
-                    id: data.mqtt?.deviceId || null,
-                    package,
-                  }
-                )
-                .then()
-                .catch(debug);
+              if (gatewayId !== null) {
+                axios
+                  .post(
+                    (process.env.MQTT || "http://127.0.0.1:33335") +
+                      "/telemetry",
+                    {
+                      id: data.mqtt?.deviceId || null,
+                      package,
+                    }
+                  )
+                  .then()
+                  .catch(console.log);
+              }
               break;
             default:
           }
@@ -86,9 +102,7 @@ dsModbus.process("ds-modbus", async function (job, done) {
       default:
         throw new Error("protocol not supported");
     }
-  } catch (err) {
-    debug(err);
-  }
+  } catch (err) {}
   dsModbus.clean(10);
   dsModbus.clean(10, "failed");
   done();

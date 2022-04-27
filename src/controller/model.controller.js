@@ -24,7 +24,6 @@ const controller = {
             transaction: t,
           }
         );
-
         res.sendStatus(201);
       });
     } catch (err) {
@@ -35,6 +34,7 @@ const controller = {
           res.status(400).send("Channel Name or Address must be unique");
         }
       } else {
+        console.log(err);
         res.sendStatus(400);
       }
     }

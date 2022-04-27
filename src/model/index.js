@@ -33,6 +33,7 @@ const { mqtts } = require("./upProtocol.model");
   const debug = require("../utils/debug")("model");
   const sequelize = require("../config/sequelize");
   const { Op } = require("sequelize");
+  const { newJob } = require("../config/bull");
   try {
     await sequelize.sync();
     debug("All models were synchronized successfully.");

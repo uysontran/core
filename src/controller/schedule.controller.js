@@ -51,7 +51,6 @@ module.exports = {
           ],
         })
       ).map((e) => e.toJSON());
-
       if (result) {
         result.forEach((e) => {
           e.channels = e.model[e.model.type];

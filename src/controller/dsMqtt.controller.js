@@ -1,7 +1,4 @@
-const debug = require("../utils/debug")("app/getAllSchedule");
 const { mqtts } = require("../model/index");
-const { Op } = require("sequelize");
-const sequelize = require("../config/sequelize");
 const axios = require("axios");
 module.exports = {
   getAll: async function (req, res) {
@@ -44,7 +41,11 @@ module.exports = {
           ...req.body,
         },
       });
-      axios.post("http://127.0.0.1:33335/newClient");
+      try {
+        await axios.post("http://127.0.0.1:33335/newClient");
+      } catch (err) {
+        console.log(err.message);
+      }
       res.sendStatus(200);
     } catch (err) {
       console.log(err);

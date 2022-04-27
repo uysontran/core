@@ -10,6 +10,7 @@ const {
 const { Op } = require("sequelize");
 const { newJob, deleteJob } = require("../config/bull");
 const { default: axios } = require("axios");
+const sequelize = require("../config/sequelize");
 async function getSchedule({ name = null, id = null }) {
   try {
     const result = (
@@ -111,12 +112,15 @@ module.exports = {
           },
         });
       }
-      await devices.create(deviceInstance, {
-        include: [
-          { association: devices.modbusRTUs },
-          { association: devices.modbusTCPs },
-          { association: devices.mqtts },
-        ],
+      await sequelize.transaction(async (t) => {
+        await devices.create(deviceInstance, {
+          include: [
+            { association: devices.modbusRTUs },
+            { association: devices.modbusTCPs },
+            { association: devices.mqtts },
+          ],
+          transaction: t,
+        });
       });
       getSchedule({ name: name });
       if (upProtocol) {
@@ -125,25 +129,7 @@ module.exports = {
       res.sendStatus(201);
     } catch (err) {
       console.log(err);
-      try {
-        if (err.errors[0].message === "name must be unique") {
-          throw new Error("Device name existed");
-        }
-        if (
-          err.parent.table !== "devices" &&
-          err.message === "Validation error"
-        ) {
-          try {
-            (await devices.findOne({ name: name })).destroy();
-          } catch (err) {
-            throw new Error(err);
-          }
-        } else {
-          throw new Error("Not handled error");
-        }
-      } catch (err) {
-        res.status(400).send(err.message);
-      }
+      res.status(400).send(err.message);
     }
   },
   delete: async function (req, res) {
@@ -212,7 +198,7 @@ module.exports = {
         throw new Error();
       }
     } catch (err) {
-      debug(err.message);
+      console.log(err);
       return res.sendStatus(404);
     }
   },
