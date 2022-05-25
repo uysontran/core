@@ -20,10 +20,10 @@ module.exports = {
             type,
             manufacture,
             MicroserviceID: service.id,
-            ModelChannels: {
+            ModelChannels: channels.map((e) => ({
               MicroserviceID: service.id,
-              [`ModelChannel_${service.id}`]: channels,
-            },
+              [`ModelChannel_${service.id}`]: e,
+            })),
           },
           {
             include: [
