@@ -1,0 +1,33 @@
+{
+  "name": "core",
+  "version": "1.0.0",
+  "description": "Core service of IoT Edge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noobmaster69-bug/core.git"
+  },
+  "keywords": [
+    "IoT"
+  ],
+  "author": "Uy Son Tran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Noobmaster69-bug/core/issues"
+  },
+  "homepage": "https://github.com/Noobmaster69-bug/core#readme",
+  "dependencies": {
+    "bull": "^4.8.1",
+    "debug": "^4.3.4",
+    "express": "^4.18.0",
+    "morgan": "^1.10.0",
+    "pm2": "^5.2.0",
+    "redis": "^4.0.6",
+    "sequelize": "^6.19.0",
+    "sqlite3": "^5.0.6"
+  }
+}
