@@ -51,7 +51,7 @@ module.exports = {
       );
     const package = [
       {
-        name: {
+        deviceName: {
           type: "String",
           value: Device.name,
         },
@@ -83,16 +83,19 @@ module.exports = {
     });
     res.sendStatus(202);
   },
-  async provisionReturn(req, res) {
+  async provisionConfirm(req, res) {
     const { sequelize } = require("../sequelize");
     const { Devices } = sequelize.models;
-    const keys = Object.keys(req.body);
-    for (const key of keys) {
-      await Devices.update(
-        { isProvision: true, token: req.body[key] },
+    const packages = req.body;
+    for (const package of packages) {
+      Devices.update(
+        {
+          isProvision: true,
+          token: package.deviceId,
+        },
         {
           where: {
-            name: key,
+            name: package.deviceName,
           },
         }
       );
