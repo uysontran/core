@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkms_ui=self.webpackChunkms_ui||[]).push([[5658],{5658:function(s,c,e){s.exports=e.p+"static/media/databaseX.dc92c67d88ff07599c85.png"}}]);

@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkms_ui=self.webpackChunkms_ui||[]).push([[8118],{8118:function(e,u,a){a.r(u),u.default={container:"Create_container__-eLbu",Carousel:"Create_Carousel__4XdDj"}}}]);
+//# sourceMappingURL=8118.b8831428.chunk.js.map
