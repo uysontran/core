@@ -46,4 +46,27 @@ module.exports = {
   async get(req, res) {
     res.sendStatus(200);
   },
+  async info(req, res) {
+    const { sequelize } = require("../sequelize");
+    const { Models, ModelChannel } = sequelize.models;
+    const models = (
+      await Models.findAll({
+        include: [ModelChannel],
+      })
+    ).map((e) => e.toJSON());
+    for (const model of models) {
+      const ModelChannel_ =
+        sequelize.models["ModelChannel_" + model.MicroserviceID];
+      const channels = (
+        await ModelChannel.findAll({
+          where: {
+            ModelID: model.id,
+          },
+          include: [ModelChannel_],
+        })
+      ).map((e) => e.toJSON()["ModelChannel_" + model.MicroserviceID]);
+      model.ModelChannels = channels;
+    }
+    res.send(models);
+  },
 };

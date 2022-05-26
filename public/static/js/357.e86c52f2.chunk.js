@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkms_ui=self.webpackChunkms_ui||[]).push([[357],{1357:function(e,_,l){l.r(_),_.default={container:"Tables_container__s4wLV",body:"Tables_body__1Xl59",head:"Tables_head__lM+nj",checkbox:"Tables_checkbox__QVIms","row-selected":"Tables_row-selected__tIdJe",row:"Tables_row__Wr3L5",toolBox:"Tables_toolBox__ceO0D",pageSelect:"Tables_pageSelect__48Fvh",pageNum:"Tables_pageNum__ogwMy",iconHolder:"Tables_iconHolder__LYmhA"}}}]);
+//# sourceMappingURL=357.e86c52f2.chunk.js.map
