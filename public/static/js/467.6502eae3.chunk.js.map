@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/467.6502eae3.chunk.js","mappings":"uKACe,SAASA,IACtB,OACE,SAAC,KAAD,CAAMC,GAAG,QAAT,UACE","sources":["pages/Login/index.js"],"sourcesContent":["import { Link } from \"react-router-dom\";\nexport default function Login() {\n  return (\n    <Link to=\"/home\">\n      <div>Hehe</div>\n    </Link>\n  );\n}\n"],"names":["Login","to"],"sourceRoot":""}

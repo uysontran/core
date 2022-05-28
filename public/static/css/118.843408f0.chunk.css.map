@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/118.843408f0.chunk.css","mappings":"AAAA,yBACE,YAEA,gBADA,iBAEA,UACA,iDACE,YACA","sources":["pages/DevicesManagement/Devices/Create/index.module.scss"],"sourcesContent":[".container {\n  height: 100%;\n  padding-top: 20px;\n  overflow: hidden;\n  z-index: 9;\n  .Carousel {\n    height: 100%;\n    width: 100%;\n  }\n}\n"],"names":[],"sourceRoot":""}

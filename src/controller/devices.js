@@ -103,4 +103,36 @@ module.exports = {
     }
     res.sendStatus(200);
   },
+  async info(req, res) {
+    const { sequelize } = require("../sequelize");
+    const { Devices, Models, Microservices } = sequelize.models;
+    const devices = (
+      await Devices.findAll({
+        include: [{ model: Models }, "upProtocol", "downProtocol"],
+      })
+    ).map((e) => e.toJSON());
+    for (const device of devices) {
+      const upProtocolConfig =
+        sequelize.models["ProtocolConfig_" + device.upProtocol.MicroserviceID];
+      device.upProtocol = (
+        await upProtocolConfig.findOne({
+          where: {
+            ProtocolID: device.upProtocolID,
+          },
+        })
+      ).toJSON();
+      const downProtocolConfig =
+        sequelize.models[
+          "ProtocolConfig_" + device.downProtocol.MicroserviceID
+        ];
+      device.downProtocol = (
+        await downProtocolConfig.findOne({
+          where: {
+            ProtocolID: device.downProtocolID,
+          },
+        })
+      ).toJSON();
+    }
+    res.send(devices);
+  },
 };

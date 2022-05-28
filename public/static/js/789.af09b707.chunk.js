@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkms_ui=self.webpackChunkms_ui||[]).push([[789],{9789:function(o,_,e){e.r(_),_.default={container:"Carousel_container__iZ7C+","tool-bar":"Carousel_tool-bar__b61dY",icon:"Carousel_icon__OS8V2","icon-2":"Carousel_icon-2__KvHtr"}}}]);
+//# sourceMappingURL=789.af09b707.chunk.js.map
