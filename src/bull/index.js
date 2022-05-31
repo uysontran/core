@@ -83,7 +83,7 @@ readDeviceData.process("readDeviceData", async function (job, done) {
         `http://${data.upProtocolMethod.host}:${data.upProtocolMethod.port}${data.upProtocolMethod.path}`,
         {
           data: {
-            package,
+            package: [package],
             protocol: data.upProtocol,
           },
         }

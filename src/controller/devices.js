@@ -52,7 +52,7 @@ module.exports = {
     const package = [
       {
         deviceName: {
-          type: "String",
+          type: "string",
           value: Device.name,
         },
         ...channels,
@@ -87,6 +87,7 @@ module.exports = {
     const { sequelize } = require("../sequelize");
     const { Devices } = sequelize.models;
     const packages = req.body;
+    console.log(JSON.stringify(req.body))
     for (const package of packages) {
       Devices.update(
         {
