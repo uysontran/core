@@ -33,4 +33,23 @@ module.exports = {
       res.sendStatus(400);
     }
   },
+  start: async function (req, res) {
+    const { id } = req.query;
+    if ({ id }) {
+      const { startMicroservice } = require("../pm2");
+      res.send(await startMicroservice(id));
+    } else {
+      res.sendStatus(400);
+    }
+  },
+  stop: async function (req, res) {
+    const { id } = req.query;
+    if ({ id }) {
+      const { stopMicroservice } = require("../pm2");
+      console.log(id);
+      res.send(await stopMicroservice(id));
+    } else {
+      res.sendStatus(400);
+    }
+  },
 };

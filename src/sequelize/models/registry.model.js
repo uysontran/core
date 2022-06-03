@@ -161,6 +161,10 @@ module.exports = async function (sequelize) {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    name: {
+      type: DataTypes.STRING,
+      defaultValue: "untitled config",
+    },
   });
   sequelize.define("ModelChannel", {
     id: {

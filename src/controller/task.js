@@ -17,5 +17,16 @@ module.exports = {
       return res.sendStatus(404);
     }
   },
-  async get(req, res) {},
+  async get(req, res) {
+    const { sequelize } = require("../sequelize");
+    const { RepeatableTasks, ReadDeviceData } = sequelize.models;
+    try {
+      const result = await RepeatableTasks.findAll({
+        include: [ReadDeviceData],
+      });
+      return res.send(result);
+    } catch (err) {
+      res.sendStatus(400);
+    }
+  },
 };
