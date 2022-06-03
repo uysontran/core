@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkms_ui=self.webpackChunkms_ui||[]).push([[875],{6875:function(n,u,e){e.r(u),e.d(u,{useSocket:function(){return o}});var t=e(885),c=e(2791),r=e(6932);function o(n){var u=(0,c.useRef)((0,r.ZP)()),e=(0,c.useState)([]),o=(0,t.Z)(e,2),f=o[0],s=o[1];return(0,c.useEffect)((function(){return console.log(""),u.current.on("connect",(function(){u.current.emit(n,!0),u.current.on(n,(function(n){s(n)}))})),function(){}}),[u,n]),f}}}]);
-//# sourceMappingURL=875.79941fcb.chunk.js.map
