@@ -37,7 +37,6 @@ module.exports = async function (sequelize) {
           },
           name: {
             type: DataTypes.STRING,
-            unique: true,
           },
           ReadWrite: {
             type: DataTypes.ENUM,
