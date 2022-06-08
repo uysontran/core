@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
-    "setup": "npm install sqlite3 --build-from-source --sqlite=/usr && npm install"
+    "setup": "npm install sqlite3 --build-from-source --sqlite=/usr && npm install",
+    "services": "node services.js | nodemon index.js"
   },
   "repository": {
     "type": "git",

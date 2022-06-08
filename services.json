@@ -1,0 +1,231 @@
+[
+  {
+    "name": "ds-modbus",
+    "path": "/home/ubuntu/ds-modbus",
+    "type": "downService",
+    "startScript": "index.js",
+    "status": "online",
+    "runOnStartUp": true,
+    "RESTAttributes": {
+      "type": "get",
+      "method": "get",
+      "host": "localhost",
+      "port": 33334,
+      "path": "/action"
+    },
+    "ServiceMetaDatas": [
+      {
+        "kind": "ModelChannel",
+        "key": "fc",
+        "type": "ENUM",
+        "values": ["03"],
+        "allowNull": "false",
+        "defaultValue": "03"
+      },
+      {
+        "kind": "ModelChannel",
+        "key": "addr",
+        "type": "STRING",
+        "allowNull": "false"
+      },
+      {
+        "kind": "ModelChannel",
+        "key": "quantity",
+        "type": "INTEGER",
+        "allowNull": "false"
+      },
+      {
+        "kind": "ModelChannel",
+        "key": "parse",
+        "type": "ENUM",
+        "values": [
+          "BigInt64BE",
+          "BigInt64LE",
+          "BigUInt64BE",
+          "BigUInt64LE",
+          "DoubleBE",
+          "DoubleLE",
+          "FloatBE",
+          "FloatLE",
+          "Int16BE",
+          "Int16LE",
+          "Int32BE",
+          "Int32LE",
+          "IntBE",
+          "IntLE",
+          "UInt16BE",
+          "UInt16LE",
+          "UInt32BE",
+          "UInt32LE",
+          "UIntBE",
+          "UIntLE"
+        ],
+        "defaultValue": "Int16BE",
+        "allowNull": "false"
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "path",
+        "type": "STRING",
+        "unique": "compositeIndex",
+        "allowNull": false,
+        "defaultValue": "/dev/ttyUSB0"
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "unitId",
+        "type": "STRING",
+        "unique": "compositeIndex",
+        "allowNull": false
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "baudRate",
+        "type": "ENUM",
+        "values": [4800, 9600, 14400, 19200, 38400, 56000, 57600, 115200],
+        "defaultValue": 9600
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "parity",
+        "type": "ENUM",
+        "values": ["none", "odd", "even"],
+        "defaultValue": "none",
+        "allowNull": false
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "stopBits",
+        "type": "INTEGER",
+        "defaultValue": 1,
+        "allowNull": false
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "dataBits",
+        "type": "INTEGER",
+        "defaultValue": 8,
+        "allowNull": false
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "port",
+        "type": "INTEGER",
+        "defaultValue": 502,
+        "allowNull": false,
+        "unique": "compositeIndex"
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "type",
+        "type": "ENUM",
+        "values": ["RTU", "TCP"],
+        "allowNull": "false"
+      }
+    ]
+  },
+  {
+    "name": "ds-mqtt",
+    "path": "/home/ubuntu/ds-mqtt",
+    "type": "upService",
+    "startScript": "index.js",
+    "status": "online",
+    "runOnStartUp": true,
+    "RESTAttributes": [
+      {
+        "type": "get",
+        "method": "get",
+        "host": "localhost",
+        "port": 33335,
+        "path": "/"
+      },
+      {
+        "type": "set",
+        "method": "post",
+        "host": "localhost",
+        "port": 33335,
+        "path": "/"
+      }
+    ],
+    "ServiceMetaDatas": [
+      {
+        "kind": "ProtocolConfig",
+        "key": "host",
+        "type": "STRING",
+        "allowNull": "false"
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "topic",
+        "type": "STRING",
+        "defaultValue": ""
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "port",
+        "type": "INTEGER",
+        "allowNull": "false"
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "protocol",
+        "type": "ENUM",
+        "values": ["mqtt", "mqtts", "tcp", "tls", "ws", "wss", "wxs", "alis"],
+        "defaultValue": "mqtt",
+        "allowNull": "false"
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "wsOption",
+        "type": "STRING",
+        "defaultValue": "{}"
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "keepalive",
+        "type": "INTEGER",
+        "defaultValue": 60
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "reschedulePings",
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "reconnectPeriod",
+        "type": "INTEGER",
+        "defaultValue": 1000
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "connectTimeout",
+        "type": "INTEGER",
+        "defaultValue": 30000
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "username",
+        "type": "STRING"
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "password",
+        "type": "STRING"
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "queueQoZero",
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      {
+        "kind": "ProtocolConfig",
+        "key": "qos",
+        "type": "INTEGER",
+        "defaultValue": 2
+      }
+    ]
+  }
+]

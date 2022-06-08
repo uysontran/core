@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkms_ui=self.webpackChunkms_ui||[]).push([[9762],{9762:function(o,n,_){_.r(n),n.default={PopUp:"ConfirmBox_PopUp__5X1cQ",content:"ConfirmBox_content__oxpSE",toolBar:"ConfirmBox_toolBar__qPgFQ",button:"ConfirmBox_button__Sn7Ts",cancel:"ConfirmBox_cancel__4LEpz",confirm:"ConfirmBox_confirm__uZT9j"}}}]);
+//# sourceMappingURL=9762.0477dd60.chunk.js.map

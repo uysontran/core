@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkms_ui=self.webpackChunkms_ui||[]).push([[7089],{7089:function(e,n,a){a.r(n),n.default={container:"CreateChannel_container__-faFu",header:"CreateChannel_header__anQA1",row:"CreateChannel_row__YdTjl",buttonHolder:"CreateChannel_buttonHolder__l1XNa",footer:"CreateChannel_footer__x1ru9"}}}]);
+//# sourceMappingURL=7089.1042b10d.chunk.js.map

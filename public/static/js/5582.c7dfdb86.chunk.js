@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkms_ui=self.webpackChunkms_ui||[]).push([[5582],{5582:function(e,t,r){r.r(t),t.default={container:"ServicesMGMT_container__ZR+6R",buttonHolder:"ServicesMGMT_buttonHolder__oQXW5",createButton:"ServicesMGMT_createButton__mah2H",tableHeader:"ServicesMGMT_tableHeader__8uwak"}}}]);
+//# sourceMappingURL=5582.c7dfdb86.chunk.js.map

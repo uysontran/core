@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkms_ui=self.webpackChunkms_ui||[]).push([[8118],{8118:function(e,u,a){a.r(u),u.default={container:"Create_container__SFKAr",Carousel:"Create_Carousel__u+TRW"}}}]);
+//# sourceMappingURL=8118.a4d842d4.chunk.js.map
