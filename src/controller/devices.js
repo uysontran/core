@@ -81,13 +81,13 @@ module.exports = {
         topic,
       },
     });
-    res.sendStatus(202);
+    res.send({ package, ProtocolID: Device.upProtocolID, topic });
   },
   async provisionConfirm(req, res) {
     const { sequelize } = require("../sequelize");
     const { Devices } = sequelize.models;
     const packages = req.body;
-    console.log(JSON.stringify(req.body))
+    console.log(JSON.stringify(req.body));
     for (const package of packages) {
       Devices.update(
         {

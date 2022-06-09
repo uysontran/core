@@ -11,6 +11,10 @@ module.exports = {
         });
         return result;
       });
+      const pm2 = require("pm2");
+      pm2.connect(() => {
+        pm2.restart("core");
+      });
       return res.sendStatus(201);
     } catch (err) {
       console.log(err);
