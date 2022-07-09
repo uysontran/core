@@ -1,12 +1,26 @@
-const debug = require("./src/utils/debug")("app");
-("use strict");
-require("./src/config/index")();
 const app = require("express")();
-//middleware
-require("./src/middleware/index")(app);
-//router
-require("./src/routes/index")(app);
-require("./src/config/redis");
-app.listen(process.env.PORT || 33333, () =>
-  debug("core is running on port " + (process.env.PORT || 33333))
-);
+(async function () {
+  //config sqlite3
+  const { sync } = require("./src/dao");
+  await sync();
+
+  //config middleware
+  require("./src/middleware")(app);
+  //config route
+  require("./src/router")(app);
+  //run server
+  const port = process.env.PORT || 33333;
+  const { createServer } = require("http");
+  const httpServer = createServer(app);
+  const io = require("socket.io")(httpServer, {
+    cors: {
+      methods: ["GET", "POST"],
+      credentials: true,
+    },
+  });
+  httpServer.listen(port);
+  io.on("connection", (client) => {
+    require("./src/io")(client);
+  });
+  console.log("core is running on port 33333");
+})();
