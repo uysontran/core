@@ -5,9 +5,9 @@ class Protocol {
         ProtocolConfigs,
         [`ProtocolConfig_${MicroserviceID}`]: protocolConfig,
       },
-    } = require("./sequelize").sequelize;
+    } = require("../sequelize").sequelize;
     try {
-      await require("./sequelize").sequelize.transaction(async (t) => {
+      await require("../sequelize").sequelize.transaction(async (t) => {
         return await ProtocolConfigs.create(
           {
             name,

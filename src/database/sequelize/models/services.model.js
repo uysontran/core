@@ -54,7 +54,7 @@ module.exports = async function (sequelize) {
       },
       protocol: {
         type: DataTypes.ENUM,
-        values: ["REST"],
+        values: ["HTTP"],
       },
       kind: {
         type: DataTypes.ENUM,
@@ -73,17 +73,31 @@ module.exports = async function (sequelize) {
       timestamps: false,
     }
   );
-  sequelize.define("REST", {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+  sequelize.define(
+    "RESTs",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      API_ID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      method: {
+        type: DataTypes.ENUM,
+        values: ["GET", "POST", "DELETE", "PUT"],
+      },
     },
-    API_ID: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-  });
+    {
+      timestamps: false,
+    }
+  );
   sequelize.define(
     "Metadata",
     {

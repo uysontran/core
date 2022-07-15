@@ -14,6 +14,7 @@ module.exports = async function (sequelize) {
     onDelete: "CASCADE",
   });
   Devices.belongsTo(ProtocolConfigs, {
+    as: "upProtocol",
     foreignKey: "upProtocolID",
     onDelete: "CASCADE",
   });
@@ -23,6 +24,7 @@ module.exports = async function (sequelize) {
     onDelete: "CASCADE",
   });
   Devices.belongsTo(ProtocolConfigs, {
+    as: "downProtocol",
     foreignKey: "downProtocolID",
     onDelete: "CASCADE",
   });

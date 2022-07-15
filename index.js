@@ -1,9 +1,9 @@
 const app = require("express")();
 (async function () {
   //config sqlite3
-  const { sync } = require("./src/dao");
+  const { sync } = require("./src/database");
   await sync();
-
+  await require("./src/tasks").boot();
   //config middleware
   require("./src/middleware")(app);
   //config route

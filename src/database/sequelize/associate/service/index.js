@@ -1,5 +1,5 @@
 module.exports = function (sequelize) {
-  const { Services, APIs, Metadata, ModelChannels, ProtocolConfigs } =
+  const { Services, APIs, Metadata, ModelChannels, ProtocolConfigs, RESTs } =
     sequelize.models;
 
   Services.hasMany(APIs, {
@@ -11,6 +11,14 @@ module.exports = function (sequelize) {
     onDelete: "CASCADE",
   });
 
+  APIs.hasOne(RESTs, {
+    foreignKey: "API_ID",
+    onDelete: "CASCADE",
+  });
+  RESTs.belongsTo(APIs, {
+    foreignKey: "API_ID",
+    onDelete: "CASCADE",
+  });
   Services.hasMany(Metadata, {
     foreignKey: "MicroserviceID",
     onDelete: "CASCADE",

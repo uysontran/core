@@ -1,9 +1,9 @@
 module.exports = {
   async post(req, res) {
-    const { Services } = require("../dao");
+    const { Services } = require("../database");
     try {
       await Services.create(req.body);
-      const { sync } = require("../dao");
+      const { sync } = require("../database");
       sync();
       res.sendStatus(201);
     } catch (err) {
@@ -13,10 +13,14 @@ module.exports = {
   },
   async get(req, res) {
     const { id } = req.query;
-    const { Services } = require("../dao");
+    const { Services } = require("../database");
     try {
       const result = await Services.get(id);
-      res.send(result.toJSON());
+      if (result) {
+        return res.send(result.toJSON());
+      } else {
+        return res.sendStatus(404);
+      }
     } catch (err) {
       console.log(err);
       res.sendStatus(400);
@@ -24,10 +28,10 @@ module.exports = {
   },
   async delete(req, res) {
     const { id } = req.query;
-    const { Services } = require("../dao");
+    const { Services } = require("../database");
     try {
       await Services.delete(id);
-      const { sync } = require("../dao");
+      const { sync } = require("../database");
       sync();
       res.sendStatus(200);
     } catch (err) {

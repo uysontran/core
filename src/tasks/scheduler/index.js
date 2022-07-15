@@ -116,7 +116,12 @@ class Scheduler {
    * @param {object} option
    * @returns {taskID}
    */
-  addTask(callback = () => {}, interval = 0, params = {}, option = {}) {
+  addTask(callback = () => {}, interval, params = {}, option = {}) {
+    if (option.startTime === undefined) {
+      option.startTime = Date.now();
+    } else {
+      option.startTime = new Date(option.startTime).getTime();
+    }
     const task = new Task(callback, interval, params, option);
     this.#tasks.push(task);
     return task.id;

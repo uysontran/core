@@ -1,6 +1,6 @@
 class Models {
   async create({ name, type, manufacture, protocol, channels }) {
-    const sequelize = require("./sequelize").sequelize;
+    const sequelize = require("../sequelize").sequelize;
     const {
       models: { Models, ModelChannels, Services, ...other },
     } = sequelize;
@@ -38,6 +38,26 @@ class Models {
     } catch (err) {
       throw err;
     }
+  }
+  async get(id) {
+    const sequelize = require("../sequelize").sequelize;
+    const {
+      models: { ModelChannels, Models },
+    } = sequelize;
+    const { RecurringTasks, Service, Model, ...associations } =
+      ModelChannels.associations;
+    const result = await Models.findOne({
+      where: { id },
+      include: [
+        {
+          model: ModelChannels,
+          include: Object.values(associations),
+        },
+      ],
+    });
+    return JSON.parse(
+      JSON.stringify(result, (k, v) => (v === null ? undefined : v))
+    );
   }
 }
 module.exports = new Models();

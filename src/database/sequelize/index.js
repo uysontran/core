@@ -3,6 +3,7 @@ const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "./db.sqlite",
   logging: false,
+  transactionType: "IMMEDIATE",
   // logging: (msg) => console.log(msg),
 });
 module.exports.sequelize = sequelize;
@@ -11,6 +12,7 @@ module.exports.sync = async function () {
     require("./models/services.model"),
     require("./models/devices.model"),
     require("./models/models.model"),
+    require("./models/tasks.models"),
   ];
   for (const model of models) {
     await model(sequelize);

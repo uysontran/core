@@ -1,6 +1,7 @@
 module.exports.post = async function (req, res) {
+  const { Tasks } = require("../database");
   try {
-    await require("../database").Models.create(req.body);
+    await Tasks.create(req.body);
     res.sendStatus(201);
   } catch (err) {
     console.log(err);
@@ -8,11 +9,12 @@ module.exports.post = async function (req, res) {
   }
 };
 module.exports.get = async function (req, res) {
+  const { Tasks } = require("../database");
   try {
-    const { id } = req.query;
-    const result = await require("../database").Models.get(id);
+    const result = await Tasks.getBootTasks(req.body);
     res.send(result);
   } catch (err) {
     console.log(err);
+    res.sendStatus(400);
   }
 };
