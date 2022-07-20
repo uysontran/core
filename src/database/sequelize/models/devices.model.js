@@ -8,6 +8,10 @@ module.exports = async function (sequelize) {
         primaryKey: true,
         autoIncrement: true,
       },
+      name: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
       upProtocolID: {
         type: DataTypes.INTEGER,
       },

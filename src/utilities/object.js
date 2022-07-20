@@ -47,7 +47,7 @@ module.exports.flatObject = function (string, object) {
     ) {
       //curr property is object -> return flated object
       const { [curr]: flat, ...keep } = pre;
-      return { ...flat, ...keep };
+      return { ...keep, ...flat };
     } else {
       //if not, return previous object
       return pre;

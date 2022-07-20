@@ -166,5 +166,8 @@ class Scheduler {
     }
     return false;
   }
+  deleteAllTask() {
+    this.#tasks.forEach((task) => task.delete());
+  }
 }
 module.exports = new Scheduler();

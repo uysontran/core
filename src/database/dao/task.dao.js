@@ -12,7 +12,7 @@ class RecurringTasks {
         );
         for (const channel of channels) {
           const cn = await ModelChannels.findByPk(channel.id);
-          RecurringChannels.create(
+          await RecurringChannels.create(
             {
               RecurringTaskId: task.id,
               ModelChannelId: cn.id,
@@ -22,24 +22,35 @@ class RecurringTasks {
             }
           );
         }
+        return task;
       });
     } catch (err) {
-      throw err;
+      console.log(err);
+      // throw err;
     }
   }
   async getBootTasks() {
     try {
       const sequelize = require("../sequelize").sequelize;
       const {
-        models: { RecurringTasks, Devices, ModelChannels, ProtocolConfigs },
+        models: {
+          RecurringTasks,
+          Devices,
+          ModelChannels,
+          ProtocolConfigs,
+          Services,
+          APIs,
+        },
       } = sequelize;
       const { object } = require("../../utilities");
       const modelChannels = Object.values(
-        object.FilterbyKeys("ModelChannel*", ModelChannels.associations)
+        object.FilterbyKeys(["ModelChannel*"], ModelChannels.associations)
       );
       const ProtocolModels = Object.values(
-        object.FilterbyKeys("ProtocolConfig*", ProtocolConfigs.associations)
+        object.FilterbyKeys(["ProtocolConfig*"], ProtocolConfigs.associations)
       );
+      let IPC = object.FilterbyKeys("!Service", APIs.associations);
+      IPC = Object.values(IPC);
       let result = await RecurringTasks.findAll({
         include: [
           {
@@ -51,16 +62,41 @@ class RecurringTasks {
           },
           {
             model: Devices,
+            where: {
+              isProvision: true,
+            },
             include: [
               {
                 model: ProtocolConfigs,
                 as: "upProtocol",
-                include: ProtocolModels,
+                include: [
+                  ...ProtocolModels,
+                  {
+                    model: Services,
+                    include: [
+                      {
+                        model: APIs,
+                        include: IPC,
+                      },
+                    ],
+                  },
+                ],
               },
               {
                 model: ProtocolConfigs,
                 as: "downProtocol",
-                include: ProtocolModels,
+                include: [
+                  ...ProtocolModels,
+                  {
+                    model: Services,
+                    include: [
+                      {
+                        model: APIs,
+                        include: IPC,
+                      },
+                    ],
+                  },
+                ],
               },
             ],
           },

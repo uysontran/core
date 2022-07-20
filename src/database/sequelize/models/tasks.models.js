@@ -22,4 +22,23 @@ module.exports = async function (sequelize) {
       timestamps: false,
     }
   );
+  sequelize.define(
+    "RecurringChannels",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      RecurringTaskId: {
+        type: DataTypes.INTEGER,
+      },
+      ModelChannelId: {
+        type: DataTypes.INTEGER,
+      },
+    },
+    {
+      timestamps: false,
+    }
+  );
 };

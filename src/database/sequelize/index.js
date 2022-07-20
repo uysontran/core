@@ -3,7 +3,7 @@ const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "./db.sqlite",
   logging: false,
-  transactionType: "IMMEDIATE",
+  // transactionType: "IMMEDIATE",
   // logging: (msg) => console.log(msg),
 });
 module.exports.sequelize = sequelize;
