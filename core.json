@@ -1,0 +1,193 @@
+{
+  "services": [
+    {
+      "name": "modbus-rtu",
+      "path": "/home/ds-modbus",
+      "type": "downServices",
+      "startScript": "index.js",
+      "APIs": [
+        {
+          "method": "REST",
+          "kind": "IPC",
+          "type": "GET",
+          "name": "RTU",
+          "label": "Read Modbus RTU",
+          "url": "http://localhost:33334/RTU"
+        }
+      ],
+      "Metadata": [
+        {
+          "kind": "ModelChannel",
+          "key": "fc",
+          "type": "ENUM",
+          "values": ["03"],
+          "defaultValue": "03"
+        },
+        {
+          "kind": "ModelChannel",
+          "key": "dataType",
+          "type": "ENUM",
+          "values": [
+            "BigInt64BE",
+            "BigInt64LE",
+            "BigUInt64BE",
+            "BigUInt64BE",
+            "BigUInt64LE",
+            "DoubleBE",
+            "DoubleLE",
+            "FloatBE",
+            "FloatLE",
+            "Int32BE",
+            "Int32LE",
+            "UInt32BE",
+            "UInt32LE",
+            "Int16BE",
+            "Int16LE",
+            "UInt16BE",
+            "UInt16LE"
+          ],
+          "defaultValue": "Int16BE"
+        },
+        {
+          "kind": "ModelChannel",
+          "key": "addr",
+          "type": "INTEGER"
+        },
+        {
+          "kind": "ProtocolConfig",
+          "key": "path",
+          "type": "STRING"
+        },
+        {
+          "kind": "ProtocolConfig",
+          "key": "baudRate",
+          "type": "INTEGER"
+        },
+        {
+          "kind": "ProtocolConfig",
+          "key": "slaveID",
+          "type": "INTEGER"
+        },
+        {
+          "kind": "ProtocolConfig",
+          "key": "parity",
+          "type": "ENUM",
+          "values": ["none", "odd", "even"]
+        }
+      ]
+    },
+    {
+      "name": "mqtt",
+      "path": "/home/ubuntu/ds-mqtt",
+      "type": "upService",
+      "startScript": "index.js",
+      "status": "online",
+      "runOnStartUp": true,
+      "APIs": [
+        {
+          "protocol": "HTTP",
+          "kind": "IPC",
+          "type": "GET",
+          "name": "provision",
+          "REST": {
+            "url": "localhost:33335/provision",
+            "method": "post"
+          }
+        },
+        {
+          "protocol": "HTTP",
+          "kind": "IPC",
+          "type": "SET",
+          "name": "telemetry",
+          "REST": {
+            "url": "localhost:33335/telemetry",
+            "method": "post"
+          }
+        }
+      ],
+      "Metadata": [
+        {
+          "kind": "ProtocolConfig",
+          "key": "host",
+          "type": "STRING",
+          "allowNull": "false"
+        },
+        {
+          "kind": "ProtocolConfig",
+          "key": "topic",
+          "type": "STRING",
+          "defaultValue": ""
+        },
+        {
+          "kind": "ProtocolConfig",
+          "key": "port",
+          "type": "INTEGER"
+        },
+        {
+          "kind": "ProtocolConfig",
+          "key": "protocol",
+          "type": "ENUM",
+          "values": ["mqtt", "mqtts", "tcp", "tls", "ws", "wss", "wxs", "alis"],
+          "defaultValue": "mqtt",
+          "allowNull": "false"
+        }
+      ]
+    }
+  ],
+  "models": [
+    {
+      "name": "WS 1",
+      "type": "Irradiance Sensor",
+      "manufacture": "",
+      "protocol": "modbus-rtu",
+      "channels": [
+        {
+          "name": "Irradiation",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "6",
+          "parse": "UInt16BE",
+          "scale": 1,
+          "offset": 0
+        }
+      ]
+    }
+  ],
+  "protocols": [
+    {
+      "name": "modbus",
+      "MicroserviceID": "1",
+      "path": "/dev/ttyUSB0",
+      "baudRate": "9600",
+      "slaveID": "2"
+    },
+    {
+      "name": "mqtt",
+      "MicroserviceID": "2",
+      "host": "95.111.200.178",
+      "protocol": "mqtt",
+      "topic": "62d7bfe61b0acb0c43676260"
+    }
+  ],
+  "devices": [
+    {
+      "ModelID": "1",
+      "upProtocolID": "2",
+      "downProtocolID": "1",
+      "name": "Weather Station 1"
+    }
+  ],
+  "tasks": [
+    {
+      "DeviceID": 1,
+      "type": "ReadDeviceData",
+      "interval": 5000,
+      "startTime": "2022-03-01T17:00:00.000Z",
+      "channels": [
+        {
+          "id": 1
+        }
+      ]
+    }
+  ]
+}

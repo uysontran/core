@@ -9,9 +9,8 @@
     "start": "nodemon index.js",
     "setup_armhf": "export AR=\"arm-linux-gnueabihf-ar\" && export CC=\"arm-linux-gnueabihf-gcc\" && export CXX=\"arm-linux-gnueabihf-g++\" &&export LINK=\"arm-linux-gnueabihf-g++\"&&npm install --build-from-source --target_arch=arm --omit=dev",
     "setup": "npm install --omit=dev",
-    "compile": "pkg . --no-bytecode --public-packages \"*\" --public",
-    "build": "DOCKER_BUILDKIT=1 docker build --no-cache --output dist .",
-    "clean": "rm -r ./dist | rm -r ./node_modules"
+    "build": "rm -f -r ./dist && DOCKER_BUILDKIT=1 docker build --output dist . --no-cache=true ",
+    "clean": "rm -f -r ./node_modules && rm -r ./db.sqlite"
   },
   "author": "",
   "license": "ISC",
@@ -26,7 +25,10 @@
   },
   "pkg": {
     "script": "*.js",
-    "assets": "node_modules/sqlite3/lib/binding/**/*.node",
+    "assets": [
+      "node_modules/sqlite3/lib/binding/**/*.node",
+      "./core.json"
+    ],
     "targets": [
       "node16-linux-armv7"
     ],

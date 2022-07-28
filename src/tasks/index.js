@@ -30,7 +30,7 @@ async function readChannels({ downProtocol, name, channels }) {
     throw err;
   }
 }
-async function uploadData({ data, upProtocol }) {
+async function uploadData({ data, upProtocol, token }) {
   const { API, ...config } = upProtocol;
   try {
     switch (API.protocol) {
@@ -39,7 +39,7 @@ async function uploadData({ data, upProtocol }) {
         const result = await axios[API.REST.method.toLowerCase()](
           `http://${API.REST.url}`,
           {
-            data: { data, config },
+            data: { data, config, token },
           }
         );
     }
@@ -91,19 +91,25 @@ function filterTask({ ModelChannels, Device }) {
     upProtocol
   );
 
-  return { name: Device.name, channels, upProtocol, downProtocol };
+  return {
+    name: Device.name,
+    channels,
+    upProtocol,
+    downProtocol,
+    token: Device.token,
+  };
 }
 
-async function telemetryTasks({ name, channels, upProtocol, downProtocol }) {
+async function telemetryTasks(params) {
   try {
-    const data = await readChannels({
-      name,
-      channels,
-      downProtocol,
+    const data = await readChannels(params);
+    data.channels.push({
+      name: "timestamp",
+      value: new Date(new Date().setMilliseconds(0)).toISOString(),
     });
-    await uploadData({ data, upProtocol });
+    await uploadData({ data, ...params });
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
   }
 }
 module.exports.boot = async function () {

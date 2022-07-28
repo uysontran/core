@@ -4,4 +4,5 @@ module.exports = function (app) {
   app.use("/models", require("./models.router")());
   app.use("/devices", require("./devices.router")());
   app.use("/tasks", require("./tasks.router")());
+  app.use("/accounts", require("./account.router")());
 };
