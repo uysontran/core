@@ -1,7 +1,7 @@
 module.exports.factory = async (req, res) => {
-  const { FlushAll } = require("../database");
+  const { FlushData } = require("../database");
   try {
-    await FlushAll();
+    await FlushData();
     const fs = require("fs");
 
     let data = await fs.readFileSync(__dirname + "/../../core.json");
@@ -35,8 +35,6 @@ module.exports.factory = async (req, res) => {
       for (let task of data.tasks) {
         const { Tasks } = require("../database");
         const { boot } = require("../tasks");
-        await Tasks.create(task);
-        await boot();
       }
     }
   } catch (err) {

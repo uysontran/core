@@ -90,7 +90,6 @@ function filterTask({ ModelChannels, Device }) {
     ],
     upProtocol
   );
-
   return {
     name: Device.name,
     channels,

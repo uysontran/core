@@ -6,11 +6,12 @@
   "bin": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js",
+    "start": "cross-env LOG_FILE=./log.txt ERR_FILE=./err.txt nodemon index.js",
     "setup_armhf": "export AR=\"arm-linux-gnueabihf-ar\" && export CC=\"arm-linux-gnueabihf-gcc\" && export CXX=\"arm-linux-gnueabihf-g++\" &&export LINK=\"arm-linux-gnueabihf-g++\"&&npm install --build-from-source --target_arch=arm --omit=dev",
     "setup": "npm install --omit=dev",
     "build": "rm -f -r ./dist && DOCKER_BUILDKIT=1 docker build --output dist . --no-cache=true ",
-    "clean": "rm -f -r ./node_modules && rm -r ./db.sqlite"
+    "clean": "rm -f -r ./node_modules && rm -r ./db.sqlite",
+    "flush": "rm -f ./log.txt && rm -f ./err.txt"
   },
   "author": "",
   "license": "ISC",
@@ -27,11 +28,15 @@
     "script": "*.js",
     "assets": [
       "node_modules/sqlite3/lib/binding/**/*.node",
-      "./core.json"
+      "./core.json",
+      "./config.json"
     ],
     "targets": [
       "node16-linux-armv7"
     ],
     "outputPath": "dist"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

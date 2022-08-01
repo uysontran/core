@@ -88,7 +88,6 @@ class Devices {
     const {
       models: { Devices },
     } = sequelize;
-    console.log(device);
     const instance = await Devices.findByPk(id);
     try {
       await instance.update(device);

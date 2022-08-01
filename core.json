@@ -7,12 +7,14 @@
       "startScript": "index.js",
       "APIs": [
         {
-          "method": "REST",
+          "protocol": "HTTP",
           "kind": "IPC",
           "type": "GET",
-          "name": "RTU",
-          "label": "Read Modbus RTU",
-          "url": "http://localhost:33334/RTU"
+          "name": "read modbus",
+          "REST": {
+            "url": "localhost:33334/RTU",
+            "method": "get"
+          }
         }
       ],
       "Metadata": [
