@@ -3,7 +3,7 @@ async function readChannels({ downProtocol, name, channels }) {
   const { object } = require("../utilities");
   try {
     switch (API.protocol) {
-      case "HTTP":
+      case "REST":
         const axios = require("axios");
         const { data } = await axios[API.REST.method.toLowerCase()](
           `http://${API.REST.url}`,
@@ -113,14 +113,22 @@ async function telemetryTasks(params) {
 }
 module.exports.boot = async function () {
   const { Tasks } = require("../database");
-  const scheudler = require("./scheduler");
-  scheudler.deleteAllTask();
+  const scheduler = require("./scheduler");
+  scheduler.deleteAllTask();
   const task = await Tasks.getBootTasks();
   task.forEach(({ interval, startTime, ModelChannels, Device, id: key }) => {
     const params = filterTask({ ModelChannels, Device });
-    scheudler.addTask(telemetryTasks, interval, params, {
+    scheduler.addTask(telemetryTasks, interval, params, {
       key,
       startTime,
     });
   });
+};
+module.exports.delete = function (key) {
+  const scheduler = require("./scheduler");
+  scheduler.deleteTaskByKey(key);
+};
+module.exports.deleteAllTask = function () {
+  const scheduler = require("./scheduler");
+  scheduler.deleteAllTask;
 };

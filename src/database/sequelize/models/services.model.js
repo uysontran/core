@@ -13,7 +13,11 @@ module.exports = async function (sequelize) {
         allowNull: false,
         unique: true,
       },
-      path: {
+      cwd: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      script: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -21,19 +25,6 @@ module.exports = async function (sequelize) {
         type: DataTypes.ENUM,
         values: ["upService", "downService"],
         allowNull: false,
-      },
-      startScript: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      status: {
-        type: DataTypes.ENUM,
-        values: ["online", "offline"],
-        defaultValue: "offline",
-      },
-      runOnStartUp: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
       },
     },
     {
@@ -51,18 +42,21 @@ module.exports = async function (sequelize) {
       MicroserviceID: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        unique: "ipc",
       },
       protocol: {
         type: DataTypes.ENUM,
-        values: ["HTTP"],
+        values: ["REST"],
       },
       kind: {
         type: DataTypes.ENUM,
         values: ["IPC", "Command"],
+        unique: "ipc",
       },
       type: {
         type: DataTypes.ENUM,
         values: ["GET,SET"],
+        unique: "ipc",
       },
       name: {
         type: DataTypes.STRING,

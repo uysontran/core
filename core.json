@@ -2,9 +2,9 @@
   "services": [
     {
       "name": "modbus-rtu",
-      "path": "/home/ds-modbus",
+      "cwd": "/home/ds-modbus",
       "type": "downServices",
-      "startScript": "index.js",
+      "script": "index.js",
       "APIs": [
         {
           "protocol": "HTTP",
@@ -80,11 +80,9 @@
     },
     {
       "name": "mqtt",
-      "path": "/home/ubuntu/ds-mqtt",
+      "cwd": "/home/ubuntu/ds-mqtt",
+      "script": "index.js",
       "type": "upService",
-      "startScript": "index.js",
-      "status": "online",
-      "runOnStartUp": true,
       "APIs": [
         {
           "protocol": "HTTP",
