@@ -5,6 +5,7 @@
       "cwd": "/home/ds-modbus",
       "type": "downServices",
       "script": "index.js",
+      "isManaged": false,
       "APIs": [
         {
           "protocol": "HTTP",
@@ -83,6 +84,7 @@
       "cwd": "/home/ubuntu/ds-mqtt",
       "script": "index.js",
       "type": "upService",
+      "isManaged": false,
       "APIs": [
         {
           "protocol": "HTTP",

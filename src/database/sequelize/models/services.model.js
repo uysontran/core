@@ -26,6 +26,11 @@ module.exports = async function (sequelize) {
         values: ["upService", "downService"],
         allowNull: false,
       },
+      isManaged: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
     },
     {
       timestamps: false,
