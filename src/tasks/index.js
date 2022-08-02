@@ -1,6 +1,5 @@
 async function readChannels({ downProtocol, name, channels }) {
   const { API, ...config } = downProtocol;
-  const { object } = require("../utilities");
   try {
     switch (API.protocol) {
       case "REST":
@@ -48,7 +47,6 @@ async function uploadData({ data, upProtocol, token }) {
   }
 }
 function filterTask({ ModelChannels, Device }) {
-  const { object } = require("../utilities");
   const channels = ModelChannels.map((channel) => {
     const flatObject = object.flatObject("ModelChannel_*", channel);
     return object.FilterbyKeys(

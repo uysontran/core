@@ -49,7 +49,7 @@ class Configuration {
         console.error(err.message);
       }
     }
-    return { isLog: config.logging };
+    global.isLog = config.logging;
   }
 }
 module.exports = new Configuration();

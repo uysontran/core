@@ -1,1 +1,1 @@
-module.exports.object = require("./object");
+global.object = require("./object");

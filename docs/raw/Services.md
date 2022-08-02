@@ -20,4 +20,5 @@ class RESTs{
 }
 Services "1..*" --> "1" APIs
 APIs "1" --> "1" RESTs
+Services "1..*" --> "1" MetaData
 ```

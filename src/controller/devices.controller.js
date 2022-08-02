@@ -16,9 +16,6 @@ module.exports.provision = async function (req, res) {
       Model: { ModelChannels },
       upProtocol,
     } = await Devices.find(id);
-
-    const { object } = require("../utilities");
-
     upProtocol = object.flatObject("ProtocolConfig_*", upProtocol);
     upProtocol = {
       ...upProtocol,

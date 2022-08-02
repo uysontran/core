@@ -47,7 +47,6 @@ class Services {
     const {
       models: { APIs },
     } = sequelize;
-    const { object } = require("../../utilities");
     let IPC = object.FilterbyKeys("!Service", APIs.associations);
     IPC = Object.values(IPC);
     const result = await APIs.findOne({

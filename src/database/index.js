@@ -17,7 +17,6 @@ module.exports.FlushData = async () => {
   for (const model of Object.values(Others)) {
     await model.drop();
   }
-  const { object } = require("../utilities/");
   const schemaToDrop = object.FilterbyKeys(
     ["ModelChannel_*", "ProtocolConfig_*"],
     Others

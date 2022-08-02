@@ -23,7 +23,6 @@ class Devices {
       },
     } = sequelize;
     try {
-      const { object } = require("../../utilities");
       const modelChannels = Object.values(
         object.FilterbyKeys(["ModelChannel_*"], ModelChannels.associations)
       );

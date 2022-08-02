@@ -1,10 +1,10 @@
 const app = require("express")();
-
+require("./src/utilities");
 (async function () {
   //config sqlite3
   const { sync, Config } = require("./src/database");
   await sync();
-  const { isLog } = await Config.load();
+  await Config.load();
   await require("./src/tasks").boot();
   //config middleware
   require("./src/middleware")(app);
@@ -29,7 +29,6 @@ const app = require("express")();
   const error = process.env.ERR_FILE || "/var/log/core/err.txt";
 
   let fn = process.stdout.write;
-
   process.stdout.write = function () {
     let timestamp = new Date().toUTCString().split(" ");
     timestamp.pop();
@@ -37,7 +36,7 @@ const app = require("express")();
     timestamp = timestamp.join("-");
     arguments["0"] = timestamp + " - " + arguments["0"];
     fn.apply(process.stdout, arguments);
-    if (isLog) {
+    if (global.isLog) {
       fs.appendFile(logger, arguments[0], (err) => {
         if (err) throw err;
       });
@@ -52,7 +51,7 @@ const app = require("express")();
     timestamp = timestamp.join("-");
     arguments["0"] = timestamp + " - " + arguments["0"];
     fn.apply(process.stderr, arguments);
-    if (isLog) {
+    if (global.isLog) {
       fs.appendFile(error, arguments[0], (err) => {
         if (err) throw err;
       });

@@ -42,7 +42,6 @@ class RecurringTasks {
           APIs,
         },
       } = sequelize;
-      const { object } = require("../../utilities");
       const modelChannels = Object.values(
         object.FilterbyKeys(["ModelChannel*"], ModelChannels.associations)
       );
