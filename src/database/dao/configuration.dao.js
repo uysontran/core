@@ -46,7 +46,10 @@ class Configuration {
           }
         }
       } catch (err) {
-        console.error(err.message);
+        console.error(
+          "something happen with the configuration file : " + err.message
+        );
+        process.exit(1);
       }
     }
     global.isLog = config.logging;
