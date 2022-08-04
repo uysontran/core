@@ -1,5 +1,6 @@
 module.exports = async function (sequelize) {
   const { ModelChannels, ProtocolConfigs, Devices, Models } = sequelize.models;
+
   Models.hasMany(Devices, {
     foreignKey: "ModelID",
     onDelete: "CASCADE",
@@ -37,4 +38,8 @@ module.exports = async function (sequelize) {
     foreignKey: "ModelID",
     onDelete: "CASCADE",
   });
+  await ModelChannels.sync();
+  await ProtocolConfigs.sync();
+  await Devices.sync();
+  await Models.sync();
 };

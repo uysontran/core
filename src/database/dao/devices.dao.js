@@ -95,5 +95,88 @@ class Devices {
       throw err;
     }
   }
+  async getInformation() {
+    const sequelize = require("../sequelize").sequelize;
+    const {
+      models: {
+        Devices,
+        Models,
+        ModelChannels,
+        ProtocolConfigs,
+        APIs,
+        Services,
+      },
+    } = sequelize;
+    try {
+      const modelChannels = Object.values(
+        object.FilterbyKeys(["ModelChannel_*"], ModelChannels.associations)
+      );
+      const ProtocolModels = Object.values(
+        object.FilterbyKeys(["ProtocolConfig*"], ProtocolConfigs.associations)
+      );
+      let IPC = object.FilterbyKeys("!Service", APIs.associations);
+      IPC = Object.values(IPC);
+
+      return (
+        await Devices.findAll({
+          include: [
+            {
+              model: Models,
+              include: [{ model: ModelChannels, include: modelChannels }],
+            },
+            {
+              model: ProtocolConfigs,
+              as: "upProtocol",
+              include: [
+                ...ProtocolModels,
+                // {
+                //   model: Services,
+                //   include: [
+                //     {
+                //       model: APIs,
+                //       include: IPC,
+                //     },
+                //   ],
+                // },
+              ],
+            },
+            {
+              model: ProtocolConfigs,
+              as: "downProtocol",
+              include: [
+                ...ProtocolModels,
+                // {
+                //   model: Services,
+                //   include: [
+                //     {
+                //       model: APIs,
+                //       include: IPC,
+                //     },
+                //   ],
+                // },
+              ],
+            },
+          ],
+        })
+      ).map((device) => {
+        return JSON.parse(
+          JSON.stringify(device, (k, v) => (v === null ? undefined : v))
+        );
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+  async delete(id) {
+    const sequelize = require("../sequelize").sequelize;
+    const {
+      models: { Devices },
+    } = sequelize;
+    try {
+      await Devices.destroy({ where: { id } });
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 module.exports = new Devices();

@@ -7,32 +7,37 @@ module.exports = async function (sequelize) {
     const modelChannels = service.Metadata.filter(
       (e) => e.kind === "ModelChannel"
     );
-    let schema = modelChannels.reduce(
-      (a, { key, type, values, allowNull, defaultValue, unique }) => {
-        return {
-          ...a,
-          [key]: {
-            type: DataTypes[type],
-            values,
-            allowNull,
-            defaultValue,
-            unique,
-          },
-        };
-      },
-      {}
-    );
-    const channel = sequelize.define(`ModelChannel_${service.id}`, schema, {
-      timestamps: false,
-    });
-    ModelChannels.hasOne(channel, {
-      foreignKey: "ModelChannelID",
-      onDelete: "CASCADE",
-    });
-    channel.belongsTo(ModelChannels, {
-      foreignKey: "ModelChannelID",
-      onDelete: "CASCADE",
-    });
+
+    if (modelChannels.length !== 0) {
+      let schema = modelChannels.reduce(
+        (a, { key, type, values, allowNull, defaultValue, unique }) => {
+          return {
+            ...a,
+            [key]: {
+              type: DataTypes[type],
+              values,
+              allowNull,
+              defaultValue,
+              unique,
+            },
+          };
+        },
+        {}
+      );
+      const channel = sequelize.define(`ModelChannel_${service.id}`, schema, {
+        timestamps: false,
+      });
+      ModelChannels.hasOne(channel, {
+        foreignKey: "ModelChannelID",
+        onDelete: "CASCADE",
+      });
+      channel.belongsTo(ModelChannels, {
+        foreignKey: "ModelChannelID",
+        onDelete: "CASCADE",
+      });
+      await ModelChannels.sync();
+      await channel.sync();
+    }
 
     const protocolConfigs = service.Metadata.filter(
       (e) => e.kind === "ProtocolConfig"
@@ -63,5 +68,7 @@ module.exports = async function (sequelize) {
       foreignKey: "ProtocolConfigID",
       onDelete: "CASCADE",
     });
+    await ProtocolConfigs.sync();
+    await configs.sync();
   }
 };

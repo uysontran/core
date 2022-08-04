@@ -3,7 +3,8 @@ module.exports = function () {
   const { devices } = require("../controller");
   Router.get("/provision", devices.provision);
   Router.post("/", devices.post);
-  //   Router.get("/", models.get);
+  Router.get("/info", devices.getInformation);
+  Router.delete("/", devices.delete);
   //   Router.delete("/", models.delete);
   return Router;
 };

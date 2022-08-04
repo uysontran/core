@@ -59,5 +59,34 @@ class Models {
       JSON.stringify(result, (k, v) => (v === null ? undefined : v))
     );
   }
+  async getAll() {
+    const sequelize = require("../sequelize").sequelize;
+    const {
+      models: { ModelChannels, Models },
+    } = sequelize;
+    const { RecurringTasks, Service, Model, ...associations } =
+      ModelChannels.associations;
+    let result = await Models.findAll({
+      include: [
+        {
+          model: ModelChannels,
+          include: Object.values(associations),
+        },
+      ],
+    });
+    result = result.map((model) => {
+      let tmp = JSON.parse(
+        JSON.stringify(model, (k, v) => (v === null ? undefined : v))
+      );
+      tmp.ModelChannels = tmp.ModelChannels.map((channel) =>
+        object.FilterbyKeys(
+          ["!MicroserviceID", "!ModelID"],
+          object.flatObject("ModelChannel_*", channel)
+        )
+      );
+      return tmp;
+    });
+    return result;
+  }
 }
 module.exports = new Models();

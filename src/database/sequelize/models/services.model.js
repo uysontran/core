@@ -46,8 +46,13 @@ module.exports = async function (sequelize) {
       },
       MicroserviceID: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         unique: "ipc",
+        references: {
+          model: "Services",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       protocol: {
         type: DataTypes.ENUM,
@@ -83,6 +88,12 @@ module.exports = async function (sequelize) {
       API_ID: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "APIs",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       url: {
         type: DataTypes.STRING,
@@ -109,6 +120,12 @@ module.exports = async function (sequelize) {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: "1",
+        references: {
+          model: "Services",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       kind: {
         type: DataTypes.ENUM,
@@ -174,6 +191,12 @@ module.exports = async function (sequelize) {
       MicroserviceID: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Services",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       name: {
         type: DataTypes.STRING,
@@ -199,10 +222,22 @@ module.exports = async function (sequelize) {
       ModelID: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Models",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       MicroserviceID: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Services",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       name: {
         type: DataTypes.STRING,

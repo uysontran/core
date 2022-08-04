@@ -14,9 +14,21 @@ module.exports = async function (sequelize) {
       },
       upProtocolID: {
         type: DataTypes.INTEGER,
+        references: {
+          model: "ProtocolConfigs",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       downProtocolID: {
         type: DataTypes.INTEGER,
+        references: {
+          model: "ProtocolConfigs",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       isProvision: {
         type: DataTypes.BOOLEAN,
@@ -27,6 +39,12 @@ module.exports = async function (sequelize) {
       ModelID: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Models",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
     },
     {

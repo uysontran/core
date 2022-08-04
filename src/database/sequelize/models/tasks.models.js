@@ -8,7 +8,16 @@ module.exports = async function (sequelize) {
         primaryKey: true,
         autoIncrement: true,
       },
-      DeviceID: { type: DataTypes.INTEGER },
+      DeviceID: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Devices",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      },
       interval: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -32,9 +41,21 @@ module.exports = async function (sequelize) {
       },
       RecurringTaskId: {
         type: DataTypes.INTEGER,
+        references: {
+          model: "RecurringTasks",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       ModelChannelId: {
         type: DataTypes.INTEGER,
+        references: {
+          model: "Models",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
     },
     {

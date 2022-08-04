@@ -1,9 +1,6 @@
 module.exports = async function (sequelize) {
-  require("./service")(sequelize);
-  await sequelize.sync();
+  await require("./service")(sequelize);
   await require("./metadata")(sequelize);
-  await sequelize.sync();
-  require("./devices")(sequelize);
-  require("./tasks")(sequelize);
-  await sequelize.sync();
+  await require("./devices")(sequelize);
+  await require("./tasks")(sequelize);
 };

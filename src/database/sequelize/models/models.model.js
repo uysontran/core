@@ -11,6 +11,12 @@ module.exports = async function (sequelize) {
       MicroserviceID: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Services",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       type: {
         type: DataTypes.STRING,

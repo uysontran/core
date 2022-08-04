@@ -1,4 +1,4 @@
-module.exports = function (sequelize) {
+module.exports = async function (sequelize) {
   const { Services, APIs, Metadata, ModelChannels, ProtocolConfigs, RESTs } =
     sequelize.models;
 
@@ -45,4 +45,11 @@ module.exports = function (sequelize) {
     foreignKey: "MicroserviceID",
     onDelete: "CASCADE",
   });
+
+  await Services.sync();
+  await APIs.sync();
+  await Metadata.sync();
+  await ModelChannels.sync();
+  await ProtocolConfigs.sync();
+  await RESTs.sync();
 };

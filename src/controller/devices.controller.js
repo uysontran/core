@@ -66,12 +66,21 @@ module.exports.provision = async function (req, res) {
     res.status(400).send(err.message);
   }
 };
-// module.exports.get = async function (req, res) {
-//   try {
-//     const { id } = req.query;
-//     const result = await require("../dao").Devices.get(id);
-//     res.send(result);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+module.exports.getInformation = async function (req, res) {
+  try {
+    const result = await require("../database").Devices.getInformation();
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+  }
+};
+module.exports.delete = async function (req, res) {
+  const { id } = req.query;
+  try {
+    await require("../database").Devices.delete(id);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(400);
+  }
+};

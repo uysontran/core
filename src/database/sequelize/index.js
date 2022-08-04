@@ -19,5 +19,6 @@ module.exports.sync = async function () {
   for (const model of models) {
     await model(sequelize);
   }
+  await sequelize.sync();
   await require("./associate")(sequelize);
 };
