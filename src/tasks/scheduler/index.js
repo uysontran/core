@@ -89,7 +89,7 @@ class Task {
     // if startTime > 0 this mean task has started in the past, below code will caculate the next period that task will run
     if (startTime > 0) {
       //if new right now is the next period, start the task immediately
-      if (startTime % interval === 0) {
+      if (startTime % interval === 0 && this.#run === 0) {
         startTime = 0;
       }
       //else calculate the gap to next period
