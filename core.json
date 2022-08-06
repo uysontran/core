@@ -148,16 +148,443 @@
           "readWrite": "R",
           "fc": "03",
           "addr": "6",
-          "parse": "UInt16BE",
+          "dataType": "UInt16BE",
           "scale": 1,
           "offset": 0
+        }
+      ]
+    },
+    {
+      "name": "PM710",
+      "type": "Power Meter",
+      "manufacture": "Schneider",
+      "protocol": "modbus-rtu",
+      "channels": [
+        {
+          "name": "Production",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "3999",
+          "dataType": "Int32BE",
+          "scale": 10
+        },
+        {
+          "name": "Power",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "4005",
+          "dataType": "Int16BE",
+          "scale": 10
+        }
+      ]
+    },
+    {
+      "name": "SUN2000",
+      "type": "Inverter",
+      "manufacture": "Huawei",
+      "protocol": "modbus-rtu",
+      "channels": [
+        {
+          "name": "PV1V",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32262",
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV1C",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32263",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV2V",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32264",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV2C",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32265",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV3V",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32266",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV3C",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32267",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV4V",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32268",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV4C",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32269",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV5V",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32270",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV5C",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32271",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV6V",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32272",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV6C",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32273",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "Uab",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32274",
+
+          "dataType": "UInt16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "Ubc",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32275",
+
+          "dataType": "UInt16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "Uca",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32276",
+
+          "dataType": "UInt16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "Ua",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32277",
+
+          "dataType": "UInt16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "Ub",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32278",
+
+          "dataType": "UInt16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "Uc",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32279",
+
+          "dataType": "UInt16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "Ia",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32280",
+
+          "dataType": "UInt16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "Ib",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32281",
+
+          "dataType": "UInt16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "Ic",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32282",
+
+          "dataType": "UInt16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "Frequency",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32283",
+
+          "dataType": "UInt16BE",
+          "scale": 0.01
+        },
+        {
+          "name": "PowerFactor",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32284",
+
+          "dataType": "Int16BE",
+          "scale": 0.001
+        },
+        {
+          "name": "InverterEfficiency",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32285",
+
+          "dataType": "UInt16BE",
+          "scale": 0.01
+        },
+        {
+          "name": "CabinetTemperature",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32286",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "InverterStatus",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32287",
+
+          "dataType": "UInt16BE",
+          "scale": 1
+        },
+        {
+          "name": "PeakActivePower",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32288",
+
+          "dataType": "Int32BE",
+          "scale": 0.001
+        },
+        {
+          "name": "ActivePower",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32290",
+
+          "dataType": "Int32BE",
+          "scale": 0.001
+        },
+        {
+          "name": "ReactivePower",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32292",
+
+          "dataType": "Int32BE",
+          "scale": 0.001
+        },
+        {
+          "name": "TotalInputPower",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32294",
+
+          "dataType": "UInt32BE",
+          "scale": 0.001
+        },
+        {
+          "name": "CEYCT",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32296",
+
+          "dataType": "UInt32BE",
+          "scale": 1
+        },
+        {
+          "name": "EHour",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32298",
+
+          "dataType": "UInt32BE",
+          "scale": 0.01
+        },
+        {
+          "name": "EDay",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32300",
+
+          "dataType": "UInt32BE",
+          "scale": 0.01
+        },
+        {
+          "name": "EMonth",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32302",
+
+          "dataType": "UInt32BE",
+          "scale": 0.01
+        },
+        {
+          "name": "EYear",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32304",
+
+          "dataType": "UInt32BE",
+          "scale": 0.01
+        },
+        {
+          "name": "ETotal",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32306",
+
+          "dataType": "UInt32BE",
+          "scale": 0.01
+        },
+        {
+          "name": "PV7V",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32314",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV7C",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32315",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV8V",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32316",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "PV8C",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "32317",
+
+          "dataType": "Int16BE",
+          "scale": 0.1
+        },
+        {
+          "name": "MPPT1",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "33022",
+
+          "dataType": "UInt32BE",
+          "scale": 0.001
+        },
+        {
+          "name": "MPPT2",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "33024",
+
+          "dataType": "UInt32BE",
+          "scale": 0.001
+        },
+        {
+          "name": "MPPT3",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "33026",
+
+          "dataType": "UInt32BE",
+          "scale": 0.001
+        },
+        {
+          "name": "MPPT4",
+          "readWrite": "R",
+          "fc": "03",
+          "addr": "33070",
+
+          "dataType": "UInt32BE",
+          "scale": 0.001
         }
       ]
     }
   ],
   "protocols": [
     {
-      "name": "modbus",
+      "name": "Weather Station Link",
       "MicroserviceID": "1",
       "path": "/dev/ttyUSB0",
       "baudRate": "9600",
@@ -169,25 +596,202 @@
       "host": "95.111.200.178",
       "protocol": "mqtt",
       "topic": "62d7bfe61b0acb0c43676260"
+    },
+    {
+      "name": "Power Meter Link",
+      "MicroserviceID": "1",
+      "path": "/dev/ttyUSB0",
+      "baudRate": "9600",
+      "slaveID": "10"
+    },
+    {
+      "name": "Inverter Link",
+      "MicroserviceID": "1",
+      "path": "/dev/ttyUSB0",
+      "baudRate": "9600",
+      "slaveID": "1"
     }
   ],
   "devices": [
     {
-      "ModelID": "1",
+      "ModelID": 1,
       "upProtocolID": "2",
       "downProtocolID": "1",
       "name": "Weather Station 1"
+    },
+    {
+      "ModelID": 2,
+      "upProtocolID": "2",
+      "downProtocolID": "3",
+      "name": "Power Meter 1"
+    },
+    {
+      "ModelID": 3,
+      "upProtocolID": "2",
+      "downProtocolID": "4",
+      "name": "Inverter 1"
     }
   ],
   "tasks": [
     {
       "DeviceID": 1,
       "type": "ReadDeviceData",
-      "interval": 5000,
+      "interval": 1000,
       "startTime": "2022-03-01T17:00:00.000Z",
       "channels": [
         {
           "id": 1
+        }
+      ]
+    },
+    {
+      "DeviceID": 2,
+      "type": "ReadDeviceData",
+      "interval": 1000,
+      "startTime": "2022-03-01T17:00:00.000Z",
+      "channels": [
+        {
+          "id": 2
+        },
+        {
+          "id": 3
+        }
+      ]
+    },
+    {
+      "DeviceID": 3,
+      "type": "ReadDeviceData",
+      "interval": 1000,
+      "startTime": "2022-03-01T17:00:00.000Z",
+      "channels": [
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        },
+        {
+          "id": 6
+        },
+        {
+          "id": 7
+        },
+        {
+          "id": 8
+        },
+        {
+          "id": 9
+        },
+        {
+          "id": 10
+        },
+        {
+          "id": 11
+        },
+        {
+          "id": 12
+        },
+        {
+          "id": 13
+        },
+        {
+          "id": 14
+        },
+        {
+          "id": 15
+        },
+        {
+          "id": 16
+        },
+        {
+          "id": 17
+        },
+        {
+          "id": 18
+        },
+        {
+          "id": 19
+        },
+        {
+          "id": 20
+        },
+        {
+          "id": 21
+        },
+        {
+          "id": 22
+        },
+        {
+          "id": 24
+        },
+        {
+          "id": 25
+        },
+        {
+          "id": 26
+        },
+        {
+          "id": 27
+        },
+        {
+          "id": 28
+        },
+        {
+          "id": 29
+        },
+        {
+          "id": 30
+        },
+        {
+          "id": 31
+        },
+        {
+          "id": 32
+        },
+        {
+          "id": 33
+        },
+        {
+          "id": 34
+        },
+        {
+          "id": 35
+        },
+        {
+          "id": 36
+        },
+        {
+          "id": 37
+        },
+        {
+          "id": 38
+        },
+        {
+          "id": 39
+        },
+        {
+          "id": 40
+        },
+        {
+          "id": 41
+        },
+        {
+          "id": 42
+        },
+        {
+          "id": 43
+        },
+        {
+          "id": 44
+        },
+        {
+          "id": 45
+        },
+        {
+          "id": 46
+        },
+        {
+          "id": 47
         }
       ]
     }

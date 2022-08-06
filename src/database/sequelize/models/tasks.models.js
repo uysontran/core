@@ -51,7 +51,7 @@ module.exports = async function (sequelize) {
       ModelChannelId: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Models",
+          model: "ModelChannels",
           key: "id",
         },
         onDelete: "CASCADE",

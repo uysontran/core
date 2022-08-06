@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkms_ui=self.webpackChunkms_ui||[]).push([[5490],{5490:function(e,t,_){_.r(t),t.default={container:"ModelsDetail_container__lKq8i",head:"ModelsDetail_head__pv7Ok",header:"ModelsDetail_header__wT-8b",headContent:"ModelsDetail_headContent__6KRCe",content:"ModelsDetail_content__XalC9",footer:"ModelsDetail_footer__IgjQ4"}}}]);
+//# sourceMappingURL=5490.f8988f2f.chunk.js.map

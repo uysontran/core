@@ -13,16 +13,37 @@ module.exports.Reset = async () => {
 };
 module.exports.FlushData = async () => {
   const { sequelize } = require("./sequelize");
-  const { Accounts, Configuration, ...Others } = sequelize.models;
-  for (const model of Object.values(Others)) {
-    await model.drop();
-  }
+  const {
+    Accounts,
+    Configuration,
+    Services,
+    Models,
+    Devices,
+    ModelChannels,
+    ProtocolConfigs,
+    RecurringChannels,
+    RecurringTasks,
+    ...Others
+  } = sequelize.models;
+  await sequelize.drop();
+  await module.exports.sync();
+  await module.exports.Config.load();
   const schemaToDrop = object.FilterbyKeys(
     ["ModelChannel_*", "ProtocolConfig_*"],
     Others
   );
-  for (const schemaName of Object.keys(schemaToDrop)) {
-    await sequelize.dropSchema(schemaName);
+  for (const schemaName of Object.values(schemaToDrop)) {
+    await schemaName.drop();
   }
+  await RecurringChannels.drop();
+  await RecurringTasks.drop();
+  await ProtocolConfigs.drop();
+  await ModelChannels.drop();
+  await Devices.drop();
+  await Models.drop();
+  await Services.drop();
+  // for (const model of Object.values(Others)) {
+  //   await model.drop();
+  // }
   await module.exports.sync();
 };

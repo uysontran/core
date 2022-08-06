@@ -49,6 +49,7 @@ class Configuration {
         console.error(
           "something happen with the configuration file : " + err.message
         );
+        console.log(err);
         process.exit(1);
       }
     }

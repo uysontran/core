@@ -2,9 +2,9 @@ async function readChannels({ downProtocol, name, channels }) {
   const { API, ...config } = downProtocol;
   try {
     switch (API.protocol) {
-      case "REST":
+      case "HTTP":
         const axios = require("axios");
-        const { data } = await axios[API.REST.method.toLowerCase()](
+        let { data } = await axios[API.REST.method.toLowerCase()](
           `http://${API.REST.url}`,
           {
             data: { name, channels, ...config },
@@ -106,7 +106,7 @@ async function telemetryTasks(params) {
     });
     await uploadData({ data, ...params });
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
   }
 }
 module.exports.boot = async function () {
@@ -114,6 +114,7 @@ module.exports.boot = async function () {
   const scheduler = require("./scheduler");
   scheduler.deleteAllTask();
   const task = await Tasks.getBootTasks();
+
   task.forEach(({ interval, startTime, ModelChannels, Device, id: key }) => {
     const params = filterTask({ ModelChannels, Device });
     scheduler.addTask(telemetryTasks, interval, params, {

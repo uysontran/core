@@ -29,7 +29,8 @@
     "assets": [
       "node_modules/sqlite3/lib/binding/**/*.node",
       "./core.json",
-      "./config.json"
+      "./config.json",
+      "public/**/*"
     ],
     "targets": [
       "node16-linux-armv7"
@@ -37,6 +38,7 @@
     "outputPath": "dist"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.19"
   }
 }

@@ -1,3 +1,5 @@
+const express = require("express");
+const path = require("path");
 const app = require("express")();
 require("./src/utilities");
 (async function () {
@@ -10,6 +12,10 @@ require("./src/utilities");
   require("./src/middleware")(app);
   //config route
   require("./src/router")(app);
+  app.use("/app/", express.static(path.join(__dirname, "public")));
+  app.get("/app/*", (req, res) =>
+    res.sendFile(path.join(__dirname, "public/index.html"))
+  );
   //run server
   const port = process.env.PORT || 33333;
   const { createServer } = require("http");

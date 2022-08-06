@@ -35,11 +35,13 @@ module.exports.factory = async (req, res) => {
       for (let task of data.tasks) {
         const { Tasks } = require("../database");
         const { boot } = require("../tasks");
+        await Tasks.create(task);
+        await boot();
       }
     }
+    res.sendStatus(200);
   } catch (err) {
     console.log(err);
     res.sendStatus(400);
   }
-  res.sendStatus(200);
 };
