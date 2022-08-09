@@ -1,5 +1,4 @@
-module.exports = function (app) {
-  const express = require("express");
+module.exports = function (app, express) {
   const morgan = require("morgan");
   app.use(express.json()); // for parsing application/json
   app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded

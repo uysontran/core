@@ -1,12 +1,30 @@
-const debug = require("./src/utils/debug")("app");
-("use strict");
-require("./src/config/index")();
-const app = require("express")();
-//middleware
-require("./src/middleware/index")(app);
-//router
-require("./src/routes/index")(app);
-require("./src/config/redis");
-app.listen(process.env.PORT || 33333, () =>
-  debug("core is running on port " + (process.env.PORT || 33333))
-);
+require("./src/utilities");
+const express = require("express");
+const app = express();
+(async () => {
+  await require("./src/database/").sync();
+
+  //config middleware
+  require("./src/middleware")(app, express);
+  //config route
+  require("./src/router")(app, express);
+
+  const port = process.env.PORT || 33333;
+  const { createServer } = require("http");
+  const httpServer = createServer(app);
+  const io = require("socket.io")(httpServer, {
+    cors: {
+      methods: ["GET", "POST"],
+      credentials: true,
+    },
+  });
+  httpServer.listen(port);
+  io.on("connection", (client) => {
+    require("./src/io")(client);
+  });
+})()
+  .then(() => console.log("core is listening on port 33333"))
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
