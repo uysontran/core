@@ -593,9 +593,9 @@
     {
       "name": "mqtt",
       "MicroserviceID": "2",
-      "host": "95.111.200.178",
+      "host": "95.111.201.43",
       "protocol": "mqtt",
-      "topic": "62d7bfe61b0acb0c43676260"
+      "topic": "62f21700536b18889af56871"
     },
     {
       "name": "Power Meter Link",
