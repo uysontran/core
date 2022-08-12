@@ -22,6 +22,12 @@ const app = express();
   io.on("connection", (client) => {
     require("./src/io")(client);
   });
+  process.on("__log", (msg) => {
+    io.emit("__log", msg);
+  });
+  process.on("__error", (msg) => {
+    io.emit("__error", msg);
+  });
 })()
   .then(() => console.log("core is listening on port 33333"))
   .catch((err) => {

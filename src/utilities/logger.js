@@ -18,6 +18,7 @@ process.stdout.write = function () {
       if (err) throw err;
     });
   }
+  process.emit("__log", arguments["0"]);
 };
 //copy stderr.write function
 fn = process.stderr.write;
@@ -32,6 +33,7 @@ process.stderr.write = function () {
       if (err) throw err;
     });
   }
+  process.emit("__error", arguments["0"]);
 };
 
 function timeStamp() {
